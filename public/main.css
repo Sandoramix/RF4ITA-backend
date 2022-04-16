@@ -1,0 +1,101 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+#map-container {
+    position: relative;
+    width: 650px;
+    height: 600px;
+    max-height: var(--homepage-height);
+    border-radius: 15px;
+}
+
+#map {
+    width: 650px;
+    height: 600px;
+}
+
+#map-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 40px;
+    background-color: #ff00003f;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    overflow: hidden;
+    border-radius: 5px 0 0 5px;
+}
+
+#coords {
+    text-align: center;
+    min-width: 4ch;
+    padding: 0.25ch;
+    border-radius: 0.5rem;
+    background-color: aliceblue;
+    font-size: 150%;
+    box-shadow: 0 0 1px inset darkgray;
+    margin-right: 0.5rem;
+}
+
+.crosshair-cursor {
+    cursor: crosshair;
+}
+
+#search {
+    border-radius: 10px;
+    display: flex;
+    background-color: aliceblue;
+    padding: 0.5rem;
+    gap: 0.25rem;
+}
+
+.search {
+    width: 1.5rem;
+    outline: none;
+    -moz-appearance: textfield;
+}
+
+#coordsSearch {
+    font-weight: 700;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 0.25rem;
+}
+
+#coordsSearch:hover {
+    cursor: pointer;
+    background-color: aqua;
+}
+
+.search::-webkit-outer-spin-button,
+.search::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.red-border {
+    border: 1px solid red;
+}
