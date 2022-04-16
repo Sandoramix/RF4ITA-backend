@@ -1,0 +1,21 @@
+{
+  "name": "rf4-ita-backend",
+  "version": "0.0.1",
+  "description": "Russian Fishing 4 ITA backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "nodemon ."
+  },
+  "author": "sandoramix",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jscomp": "^1.0.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "leaflet": "^1.7.1"
+  }
+}
