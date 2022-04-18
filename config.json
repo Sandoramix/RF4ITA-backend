@@ -10,25 +10,7 @@
         "password": "",
         "schema": "russian_fishing_4"
     },
-    "maps_names": [
-        "thecottagepond",
-        "mosquitolake",
-        "windingrivulet",
-        "oldburglake",
-        "belayalake",
-        "kuorilake",
-        "bearklake",
-        "volkhovriver",
-        "severskydonetsriver",
-        "surariver",
-        "ladogariver",
-        "theamberlake",
-        "ladogaarchipelago",
-        "akhtubariver",
-        "lowertunguskariver",
-        "yamariver"
-    ],
     "routes_dir": "./routes",
-    "maps_dir": "./static/maps",
-    "maps_layouts_dir": "./static/maps_layouts"
+    "maps_dir": "./static/map_tiles",
+    "maps_layouts_dir": "./static/layouts"
 }
