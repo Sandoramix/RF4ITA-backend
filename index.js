@@ -7,19 +7,12 @@ const express = require(`express`);
 const http = require(`http`);
 const cors = require(`cors`);
 
-const app = express(
-    cors({
-        origin: `*`,
-    })
-);
+const app = express(cors());
 
 const http_server = http.createServer(app).listen(env.server.port, env.server.host, () => {
     console.log(`listening on http://localhost:${env.server.port}`);
 });
 
-// app.use(`/`,(req,res)=>{
-// 	res.redirect(`/maps`)
-// })
 app.use(`/leaflet`, express.static(`./node_modules/leaflet/dist/`));
 app.use(`/`, express.static(path.join(__dirname, `public`)));
 
