@@ -5,6 +5,7 @@ const express = require(`express`);
 
 const fs = require(`fs`);
 const path = require(`path`);
+const maps = require(`../maps.json`);
 
 module.exports = {
     base_route: `/maps`,
@@ -13,20 +14,17 @@ module.exports = {
         const route = express.Router({ caseSensitive: false });
 
         route.get(`/`, (req, res) => {
-            res.json({
-                response: env.maps_names,
-            });
+            res.status(200).json(maps);
         });
         route.get(`/:map/ground`, (req, res) => {
-            console.log(req.params);
-            const map_name = req.params.map.toLowerCase();
-            console.log();
-            if (!env.maps_names.includes(map_name)) {
+            var map_name = req.params.map.toLowerCase();
+
+            if (!map_name || !maps[map_name]) {
                 return notFound(res, "Map not found");
             }
 
             const file_path = `${env.maps_layouts_dir}/${map_name}.svg`;
-            console.log(file_path);
+
             var file = path.resolve(file_path);
 
             if (!fs.existsSync(file)) {
@@ -36,8 +34,9 @@ module.exports = {
         });
 
         route.get(`/:map/:id`, (req, res) => {
-            const map_name = req.params.map;
-            if (!env.maps_names.includes(map_name.toLowerCase())) {
+            var map_name = req.params.map.toLowerCase();
+
+            if (!maps[map_name]) {
                 return notFound(res, "Map not found");
             }
             const id = req.params.id;
@@ -63,3 +62,22 @@ module.exports = {
         return route;
     },
 };
+
+// "maps_names": [
+//     "thecottagepond",
+//     "mosquitolake",
+//     "windingrivulet",
+//     "oldburglake",
+//     "belayalake",
+//     "kuorilake",
+//     "bearklake",
+//     "volkhovriver",
+//     "severskydonetsriver",
+//     "surariver",
+//     "ladogariver",
+//     "theamberlake",
+//     "ladogaarchipelago",
+//     "akhtubariver",
+//     "lowertunguskariver",
+//     "yamariver"
+// ],
