@@ -1,11 +1,40 @@
-const db = require(`../database.js`);
+const db = require(`../handlers/database.js`);
 const env = require(`../config.json`);
 
 const express = require(`express`);
 
 const fs = require(`fs`);
 const path = require(`path`);
-const maps = require(`../maps.json`);
+
+const auth = require("../handlers/auth");
+const { errorCatch } = require("../handlers/utils");
+
+var maps = [];
+db.prepare(`SELECT * FROM maps`)
+    .all()
+    .forEach((map) => {
+        let limitsX = map.limits_x.split(":");
+        let limitsY = map.limits_y.split(":");
+
+        maps.push({
+            id: map.id,
+            name: map.name,
+            formatted_name: map.formatted_name,
+            limits: {
+                x: {
+                    min: parseInt(limitsX[0]),
+                    max: parseInt(limitsX[1]),
+                },
+                y: {
+                    min: parseInt(limitsY[0]),
+                    max: parseInt(limitsY[1]),
+                },
+            },
+            square_distance: map.square_distance,
+            has_ground_tiles: map.has_ground_tiles === "T",
+        });
+    });
+const maps_has = (name) => maps.find((m) => m.name === name);
 
 module.exports = {
     base_route: `/maps`,
@@ -14,21 +43,35 @@ module.exports = {
         const route = express.Router({ caseSensitive: false });
 
         route.get(`/`, (req, res) => {
-            res.status(200).json(maps);
+            res.status(200).json({
+                results: maps,
+            });
+        });
+
+        route.get(`/:map/points`, (req, res) => {
+            res.status(200).json({
+                message: `ciao`,
+            });
+        });
+
+        route.post(`/:map/points`, auth, (req, res) => {
+            res.status(200).json({
+                message: `ciao`,
+            });
         });
         route.get(`/:map/ground`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
 
-            if (!map_name || !maps[map_name]) {
-                return notFound(res, "Map not found");
+            if (!map_name || !maps_has(map_name)) {
+                return errorCatch(res, 404, `Map not found`);
             }
 
-            const file_path = `${env.maps_layouts_dir}/${map_name}.svg`;
+            const file_path = `./static/layouts/${map_name}.svg`;
 
             var file = path.resolve(file_path);
 
             if (!fs.existsSync(file)) {
-                return res.send();
+                return res.send(null);
             }
             res.status(200).sendFile(file);
         });
@@ -36,48 +79,22 @@ module.exports = {
         route.get(`/:map/:id`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
 
-            if (!maps[map_name]) {
-                return notFound(res, "Map not found");
+            if (!maps_has(map_name)) {
+                return errorCatch(res, 404, `Map not found`);
             }
             const id = req.params.id;
-            const file_path = `${env.maps_dir}/${map_name}/${id}`;
+            const file_path = `./static/map_tiles/${map_name}/${id}`;
             res.status = 200;
 
             var file = path.resolve(file_path);
 
             if (!fs.existsSync(file)) {
-                return res.sendFile(path.resolve(`${env.maps_dir}/tile_not_found.jpg`));
+                return res.sendFile(path.resolve(`./static/map_tiles/tile_not_found.jpg`));
             }
 
             res.sendFile(file);
         });
 
-        function notFound(res, message) {
-            res.status = 404;
-            res.json({
-                response: message,
-            });
-        }
-
         return route;
     },
 };
-
-// "maps_names": [
-//     "thecottagepond",
-//     "mosquitolake",
-//     "windingrivulet",
-//     "oldburglake",
-//     "belayalake",
-//     "kuorilake",
-//     "bearklake",
-//     "volkhovriver",
-//     "severskydonetsriver",
-//     "surariver",
-//     "ladogariver",
-//     "theamberlake",
-//     "ladogaarchipelago",
-//     "akhtubariver",
-//     "lowertunguskariver",
-//     "yamariver"
-// ],
