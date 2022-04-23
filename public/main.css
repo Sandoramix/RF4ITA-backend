@@ -1,5 +1,6 @@
-html,
-body {
+*,
+*::before,
+*::after {
     padding: 0;
     margin: 0;
 }
@@ -31,6 +32,7 @@ body {
 #map {
     width: 650px;
     height: 600px;
+    user-select: none;
 }
 
 #map-header {
@@ -65,6 +67,7 @@ body {
 }
 
 #search {
+    user-select: none;
     border-radius: 10px;
     display: flex;
     background-color: #ffffff9c;
@@ -124,4 +127,57 @@ body {
     display: inline;
     justify-content: center;
     align-items: center;
+}
+
+
+/*----------------------------------------------*/
+
+#draw-canvas {
+    z-index: 999;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 650px;
+    height: 600px;
+    background-color: transparent;
+}
+
+#draw-tools__container {
+    z-index: 1000;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#draw-tools__container,
+#draw-tools {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+#draw-tools {
+    justify-content: end;
+}
+
+#draw-tools__color {}
+
+#draw-tools__pen,
+#draw-tools__clear,
+#draw-tools__color,
+#draw-tools__px {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    line-height: 26px;
+    text-align: center;
+    font-weight: 600;
+}
+
+#draw-tools__pen:hover,
+#draw-tools__clear:hover,
+#draw-tools__color:hover,
+#draw-tools__px:hover {
+    cursor: pointer;
+    border: 1px solid blue;
 }

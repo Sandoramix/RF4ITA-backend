@@ -1,22 +1,23 @@
 const mapTarget = document.querySelector(`#place`);
 
-var MAPS = {};
+var MAPS = [];
 
 function updateSelect() {
-    for (let j = 0; j < Object.keys(MAPS).length; j++) {
+    for (let j = 0; j < MAPS.length; j++) {
         let el = document.createElement(`option`);
         if (j == 0) el.selected = true;
 
-        let name = Object.keys(MAPS)[j];
+        let map = MAPS[j];
+        let name = map.name;
         el.value = name;
-        el.innerText = MAPS[name].prettifiedName;
+        el.innerText = map.formattedName;
         mapTarget.append(el);
     }
 }
-fetch(`http://localhost/maps`, { method: `GET`, mode: "no-cors" })
+fetch(`http://localhost/api/maps`, { method: `GET` })
     .then((res) => res.json())
     .then((data) => {
-        MAPS = data;
+        MAPS = data.results;
         updateSelect();
         updateMap(mapTarget.selectedOptions[0].value);
     });
@@ -41,7 +42,7 @@ const SEARCH_LATLNG_BTN = document.querySelector(`#coordsSearch`),
     IMG_INNER_SIZE = IMG_OUTER_SIZE - IMG_MIN_INNER_PX * 2,
     IG_MAP_SQUARE_LENGTH = 94;
 
-var currentMap = MAPS["thecottagepond"],
+var currentMap,
     layerObject = document.createElement(`object`),
     leafletMap = L.map(`map`, {}),
     currentCoordinateCircle = L.circleMarker(),
@@ -62,11 +63,130 @@ var currentMap = MAPS["thecottagepond"],
 
 userFirstMark = userSecondMark = userMarksLine = polylineTooltip = null;
 
+var drawToolsContainer = document.querySelector(`#draw-tools`),
+    drawColorBtn = document.querySelector(`#draw-tools__color`),
+    drawClearBtn = document.querySelector(`#draw-tools__clear`),
+    drawLineSizeBtn = document.querySelector(`#draw-tools__px`),
+    drawPenBtn = document.querySelector(`#draw-tools__pen`);
+
+drawPenBtn.addEventListener(`click`, (ev) => {
+    canDraw = !canDraw;
+    if (!canDraw) {
+        drawingCanvas.classList.remove(`red-border`);
+        drawingCanvas.style.display = drawToolsContainer.style.display = `none`;
+        leafletMap.dragging.enable();
+        return clearCanvas();
+    }
+    drawToolsContainer.style.display = `flex`;
+    drawingCanvas.classList.add(`red-border`);
+    drawingCanvas.style.display = `block`;
+    leafletMap.dragging.disable();
+});
+drawLineSizeBtn.addEventListener(`click`, (ev) => {
+    ev.stopPropagation();
+    let currentPx = drawLineSizeBtn.textContent;
+    drawLineSizeBtn.textContent = currentPx = currentPx === `1px` ? `2px` : currentPx === `2px` ? `3px` : `1px`;
+    ctx.lineWidth = parseInt(currentPx);
+    clearCanvas(false);
+});
+drawClearBtn.addEventListener(`click`, (ev) => {
+    ev.stopPropagation();
+    clearCanvas();
+});
+drawColorBtn.addEventListener(`click`, () => {
+    let currentColor = window.getComputedStyle(drawColorBtn).backgroundColor;
+    currentColor = currentColor === `rgb(0, 0, 0)` ? `rgb(255, 0, 0)` : `rgb(0, 0, 0)`;
+    drawColorBtn.style.backgroundColor = currentColor;
+    ctx.strokeStyle = currentColor;
+    clearCanvas(false);
+});
+
+var canDraw = false;
+
+var drawingCanvas = document.querySelector("#draw-canvas"),
+    ctx = drawingCanvas.getContext("2d"),
+    drawingLines = [],
+    drawCorrectionX = 18,
+    drawCorrectionY = 160,
+    isDrawing = false,
+    drawNewPosX = 0,
+    drawNewPosY = 0;
+drawingCanvas.width = 650;
+drawingCanvas.height = 600;
+ctx.lineWidth = 1;
+
+function startDrawing(ev) {
+    ev.stopPropagation();
+    isDrawing = true;
+    drawingLines.push([]);
+}
+
+function addNewLine() {
+    drawingLines[drawingLines.length - 1].push({ x: drawNewPosX, y: drawNewPosY });
+}
+
+function drawAllLines() {
+    ctx.beginPath();
+    drawingLines.forEach((lines) => {
+        ctx.moveTo(lines[0].x, lines[0].y);
+        lines.forEach((line) => {
+            ctx.lineTo(line.x, line.y);
+        });
+    });
+    ctx.stroke();
+}
+
+function drawLine(ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    if (!isDrawing) return;
+
+    ctx.lineJoin = ctx.lineCap = "round";
+
+    if (!ev.changedTouches) {
+        drawNewPosX = ev.layerX;
+        drawNewPosY = ev.layerY;
+    } else {
+        drawNewPosX = ev.changedTouches[0].pageX - drawCorrectionX;
+        drawNewPosY = ev.changedTouches[0].pageY - drawCorrectionY;
+    }
+    addNewLine();
+    drawAllLines();
+    ctx.stroke();
+}
+
+function drawToggle(ev) {
+    ev.stopPropagation();
+    isDrawing = false;
+    addNewLine();
+}
+drawingCanvas.addEventListener(`mousedown`, startDrawing, false);
+drawingCanvas.addEventListener(`mousemove`, drawLine, false);
+drawingCanvas.addEventListener(`mouseup`, drawToggle, false);
+drawingCanvas.addEventListener(`drag`, drawToggle, false);
+drawingCanvas.addEventListener(`touchstart`, startDrawing, false);
+drawingCanvas.addEventListener(`touchmove`, drawLine, false);
+drawingCanvas.addEventListener(`mouseover`, () => {});
+drawingCanvas.addEventListener(`click`, (ev) => {
+    ev.stopPropagation();
+});
+
+function clearCanvas(ev) {
+    ev = void 0 === ev ? !0 : ev;
+    ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    !0 === ev && (drawingLines = []);
+    isWhatermark = false;
+    drawAllLines();
+}
+//--------------------------------------------------------------------
+
 function updateMap(map_name) {
-    if (!MAPS[map_name]) return;
-    currentMap = MAPS[map_name];
-    xRatio = IMG_INNER_SIZE / (currentMap.x.max - currentMap.x.min);
-    yRatio = IMG_INNER_SIZE / (currentMap.y.max - currentMap.y.min);
+    currentMap = MAPS.find((m) => m.name === map_name);
+    console.log(currentMap);
+    if (!currentMap) return;
+
+    xRatio = IMG_INNER_SIZE / (currentMap.limits.x.max - currentMap.limits.x.min);
+    yRatio = IMG_INNER_SIZE / (currentMap.limits.y.max - currentMap.limits.y.min);
 
     LEAFLET_MAP.innerHTML = `<div id="map"></div>`;
     if (leafletMap) {
@@ -77,7 +197,7 @@ function updateMap(map_name) {
 
     if (map_name === ``) return;
 
-    mapTileLayer = new L.tileLayer(`http://localhost/MAPS/${map_name}/{z}_{x}_{y}.jpg`, {
+    mapTileLayer = new L.tileLayer(`http://localhost/api/maps/${map_name}/{z}_{x}_{y}.jpg`, {
         minZoom: 0,
         maxZoom: 2,
         noWrap: true,
@@ -134,8 +254,8 @@ function updateMap(map_name) {
 
                 let check = coordsInBounds(x, y);
 
-                let igX = leafletToGameCoordinate(x, xRatio, currentMap.x);
-                let igY = leafletToGameCoordinate(y, yRatio, currentMap.y);
+                let igX = leafletToGameCoordinate(x, xRatio, currentMap.limits.x);
+                let igY = leafletToGameCoordinate(y, yRatio, currentMap.limits.y);
 
                 COORDS_CONTENT.textContent = `${check ? `${igX}:${igY}` : `-:-`}`;
 		if (!check) return;
@@ -179,8 +299,8 @@ function coordsSearchHandler() {
 	let igX = parseInt(SEARCH_LNG.value);
 	let igY = parseInt(SEARCH_LAT.value);
 
-	let goodCoords = checkSearchCoords(igX, currentMap.x, SEARCH_LNG);
-	goodCoords = goodCoords && checkSearchCoords(igY, currentMap.y, SEARCH_LAT);
+	let goodCoords = checkSearchCoords(igX, currentMap.limits.x, SEARCH_LNG);
+	goodCoords = goodCoords && checkSearchCoords(igY, currentMap.limits.y, SEARCH_LAT);
 
 	if (!goodCoords) return;
 
@@ -190,8 +310,8 @@ function coordsSearchHandler() {
 	if (currentCoordinateCircle) {
 		currentCoordinateCircle.removeFrom(leafletMap);
 	}
-	let mapX = gameToLeafletCoordinate(igX, xRatio, currentMap.x),
-		mapY = gameToLeafletCoordinate(igY, yRatio, currentMap.y, true);
+	let mapX = gameToLeafletCoordinate(igX, xRatio, currentMap.limits.x),
+		mapY = gameToLeafletCoordinate(igY, yRatio, currentMap.limits.y, true);
 	if (!coordsInBounds(mapX, mapY)) return;
 	newUserMarksHandler(L.latLng(mapY, mapX));
 }
@@ -206,8 +326,8 @@ function newUserMarksHandler(latlng) {
 		return;
 	}
 
-	let igx = leafletToGameCoordinate(latlng.lng, xRatio, currentMap.x),
-		igy = leafletToGameCoordinate(IMG_OUTER_SIZE - latlng.lat, yRatio, currentMap.y);
+	let igx = leafletToGameCoordinate(latlng.lng, xRatio, currentMap.limits.x),
+		igy = leafletToGameCoordinate(IMG_OUTER_SIZE - latlng.lat, yRatio, currentMap.limits.y);
 
 	if (userFirstMark) {
 		userSecondMark = newCircleMarker(latlng, 8, `${igx}:${igy}`, `#40FF40`).addTo(leafletMap);
@@ -237,7 +357,7 @@ function updatePolyLine(latlng, offset = 0) {
 
 	userMarksLine.setLatLngs([userFirstMark.getLatLng(), newLatlng(lat, lng)]);
 
-	let distance = distanceBetweenTwoPoints(userFirstMark.getLatLng(), latlng, IG_MAP_SQUARE_LENGTH / currentMap.squareWidth);
+	let distance = distanceBetweenTwoPoints(userFirstMark.getLatLng(), latlng, IG_MAP_SQUARE_LENGTH / currentMap.squareDistance);
 
 	polylineTooltip.setLatLng(midpoint).setContent(`Distance: <b>${distance}m</b> <em><b>${distance !== 0 ? direction : ``}</b></em>`);
 }

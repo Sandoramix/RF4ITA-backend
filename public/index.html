@@ -15,6 +15,16 @@
 <body>
     <select name="selectPlace" id="place"></select>
     <div id="map-container">
+        <div id="draw-tools__container">
+            <div id="draw-tools" style="display: none;">
+                <div id="draw-tools__color" style="background-color: black;"></div>
+                <div id="draw-tools__clear">X</div>
+                <div id="draw-tools__px">1px</div>
+            </div>
+            <div id="draw-tools__pen">✎</div>
+        </div>
+
+        <canvas id="draw-canvas" style="display: none;"></canvas>
         <div id="map-header">
             <span id="coords" class="shadow">-:-</span>
             <div id="search" class="shadow">
