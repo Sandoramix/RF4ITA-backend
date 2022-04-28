@@ -90,4 +90,5 @@ module.exports = {
 
         return route;
     },
+    maps_has,
 };
