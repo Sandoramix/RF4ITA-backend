@@ -1,7 +1,6 @@
-const env = require("../config.json");
-
 const sqlite = require(`better-sqlite3`);
-let db_path = `./db.sqlite`;
+let path = require(`path`);
+let db_path = path.resolve(__dirname, `../`, `db.sqlite`);
 var db = sqlite();
 //TODO REMOVE VERBOSE MODE
 
@@ -10,30 +9,47 @@ try {
 } catch (error) {
     db = sqlite(db_path, { fileMustExist: false });
     const queries = [
-        `DROP TABLE IF EXISTS users;`,
         `DROP TABLE IF EXISTS maps;`,
-        `CREATE TABLE users (
-    id       INTEGER       PRIMARY KEY AUTOINCREMENT,
-    email    VARCHAR (100) UNIQUE,
-    nickname VARCHAR (100) NOT NULL,
-    password VARCHAR (100) NOT NULL,
-    status   VARCHAR       NOT NULL
-                           DEFAULT pending
-                           CHECK (status IN ('pending', 'activated') ),
-    token                  UNIQUE
-);`,
-
         `CREATE TABLE maps (
-    id               INTEGER       PRIMARY KEY AUTOINCREMENT,
-    name             VARCHAR (100) NOT NULL,
-    formatted_name   VARCHAR (100) NOT NULL,
-    limits_x         VARCHAR (10)  NOT NULL,
-    limits_y         VARCHAR (10)  NOT NULL,
-    square_distance  INTEGER (5)   NOT NULL,
-    has_ground_tiles CHAR (1)      DEFAULT F
-                                   NOT NULL
-                                   CHECK (has_ground_tiles IN ('F', 'T') ) 
+    id                INTEGER       PRIMARY KEY AUTOINCREMENT,
+    name              VARCHAR (100) NOT NULL,
+    formatted_name    VARCHAR (100) NOT NULL,
+    formatted_name_it VARCHAR (100),
+    limits_x          VARCHAR (10)  NOT NULL,
+    limits_y          VARCHAR (10)  NOT NULL,
+    square_distance   INTEGER (5)   NOT NULL,
+    has_ground_tiles  CHAR (1)      DEFAULT F
+                                    NOT NULL
+                                    CHECK (has_ground_tiles IN ('F', 'T') ) 
 );`,
+        `DROP TABLE IF EXISTS fishes;`,
+        `CREATE TABLE fishes (
+    id           INTEGER      PRIMARY KEY AUTOINCREMENT,
+    name         VARCHAR (50) NOT NULL,
+    name_it      VARCHAR,
+    trophy       INTEGER,
+    super_trophy INTEGER,
+    icon         VARCHAR
+);`,
+        `DROP TABLE IF EXISTS map_fishes;`,
+        `CREATE TABLE map_fishes (
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    map  INTEGER REFERENCES maps (id) ON DELETE CASCADE
+                                      MATCH SIMPLE
+                 NOT NULL,
+    fish INTEGER REFERENCES fishes (id) ON DELETE CASCADE
+                                        MATCH SIMPLE
+                 NOT NULL
+);`,
+        `DROP TABLE IF EXISTS map_trophies;`,
+        `CREATE TABLE map_trophies (
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    map  VARCHAR REFERENCES maps (id) ON DELETE CASCADE
+                                      MATCH SIMPLE,
+    fish VARCHAR REFERENCES fishes (id) ON DELETE CASCADE
+                                        MATCH SIMPLE
+);
+`,
     ];
     queries.forEach((x) => {
         db.prepare(x).run();
