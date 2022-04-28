@@ -1,12 +1,10 @@
 const db = require(`../handlers/database.js`);
-const env = require(`../config.json`);
 
 const express = require(`express`);
 
 const fs = require(`fs`);
 const path = require(`path`);
 
-const auth = require("../handlers/auth");
 const { errorCatch } = require("../handlers/utils");
 
 var maps = [];
@@ -54,11 +52,6 @@ module.exports = {
             });
         });
 
-        route.post(`/:map/points`, auth, (req, res) => {
-            res.status(200).json({
-                message: `ciao`,
-            });
-        });
         route.get(`/:map/ground`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
 
@@ -71,14 +64,14 @@ module.exports = {
             var file = path.resolve(file_path);
 
             if (!fs.existsSync(file)) {
-                return res.send(null);
+                return res.status(404).send(null);
             }
             res.status(200).sendFile(file);
         });
 
         route.get(`/:map/:id`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
-
+            console.log(req.params);
             if (!maps_has(map_name)) {
                 return errorCatch(res, 404, `Map not found`);
             }
