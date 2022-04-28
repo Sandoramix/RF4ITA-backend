@@ -50,6 +50,36 @@ try {
                                         MATCH SIMPLE
 );
 `,
+        `DROP VIEW IF EXISTS map_fishable;`,
+        `CREATE VIEW map_fishable AS
+    SELECT m.name AS map_name,
+           m.formatted_name AS map_formatted_name,
+           m.formatted_name_it AS map_formatted_name_it,
+           f.name AS fish_name,
+           f.name_it AS fish_name_it,
+           f.trophy AS fish_trophy,
+           f.super_trophy AS fish_super_trophy,
+           f.icon AS fish_icon
+      FROM map_fishes mf
+           INNER JOIN
+           maps m ON m.id = mf.map
+           INNER JOIN
+           fishes f ON f.id = mf.fish;`,
+        `DROP VIEW IF EXISTS all_map_trophies;`,
+        `CREATE VIEW all_map_trophies AS
+    SELECT m.name AS map_name,
+           m.formatted_name AS map_formatted_name,
+           m.formatted_name_it AS map_formatted_name_it,
+           f.name AS fish_name,
+           f.name_it AS fish_name_it,
+           f.trophy AS fish_trophy,
+           f.super_trophy AS fish_super_trophy,
+           f.icon AS fish_icon
+      FROM map_trophies mt
+           INNER JOIN
+           maps m ON m.id = mt.map
+           INNER JOIN
+           fishes f ON f.id = mt.fish;`,
     ];
     queries.forEach((x) => {
         db.prepare(x).run();
