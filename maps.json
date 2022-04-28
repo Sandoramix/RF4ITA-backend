@@ -51,8 +51,8 @@
         "squareWidth": 39,
         "hasGroundTiles": true
     },
-    "belayalake": {
-        "prettifiedName": "Belaya Lake",
+    "belayariver": {
+        "prettifiedName": "Belaya River",
         "x": {
             "min": 3,
             "max": 110
@@ -77,7 +77,7 @@
         "squareWidth": 46,
         "hasGroundTiles": false
     },
-    "bearklake": {
+    "bearlake": {
         "prettifiedName": "Bear Lake",
         "x": {
             "min": 8,
@@ -129,8 +129,8 @@
         "squareWidth": 83,
         "hasGroundTiles": false
     },
-    "ladogariver": {
-        "prettifiedName": "Ladoga River",
+    "ladogalake": {
+        "prettifiedName": "Ladoga Lake",
         "x": {
             "min": 8,
             "max": 98
@@ -182,7 +182,7 @@
         "hasGroundTiles": true
     },
     "lowertunguskariver": {
-        "prettifiedName": "Lowe Tunguska River",
+        "prettifiedName": "Lower Tunguska River",
         "x": {
             "min": 0,
             "max": 240
