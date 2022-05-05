@@ -34,6 +34,13 @@ app.use(`/`, express.static(path.join(__dirname, `public`)));
 var endpoints = {};
 getHandlers();
 
+const mobileBrowser = require("detect-mobile-browser");
+app.use(mobileBrowser());
+app.use(`/api/ismobile`, cors(), (req, res) => {
+    let result = req.SmartPhone.isAny();
+    res.status(200).json({ result });
+});
+
 function getHandlers() {
     var module_files = fs.readdirSync(path.resolve(__dirname, `routes`), {
         withFileTypes: true,
