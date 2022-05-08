@@ -72,7 +72,7 @@ module.exports = {
 
 		route.get(`/:map/:id`, (req, res) => {
 			var map_name = req.params.map.toLowerCase();
-			console.log(req.params);
+
 			if (!mapExists(map_name)) {
 				return errorCatch(res, 404, `Map not found`);
 			}
