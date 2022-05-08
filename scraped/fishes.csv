@@ -3,13 +3,13 @@ Amur Catfish,5000,7000,lowertunguskariver
 Arctic Char,11000,16000,kuorilake lowertunguskariver yamariver
 Arctic Grayling,2000,2500,lowertunguskariver yamariver
 Arctic Omul,3000,4000,lowertunguskariver
-Asian Smelt,270,340,lowertunguskariver,yamariver
+Asian Smelt,270,340,lowertunguskariver yamariver
 Asp,8000,13000,windingrivulet belayariver volkhovriver severskydonetsriver surariver akhtubariver lowertunguskariver yamariver
 Atlantic Salmon,30000,38000,volkhovriver ladogalake ladogaarchipelago
 Baikal Omul,6000,7000,ladogaarchipelago lowertunguskariver
 Baltic Sturgeon,100000,200000,ladogalake ladogaarchipelago
 Bastard Sturgeon,50000,70000,akhtubariver
-Beloribista Whitefish,15000,25000,akhtubariver
+Beloribitsa Whitefish,15000,25000,akhtubariver
 Beluga,500000,1000000,akhtubariver
 Bighead Carp,30000,45000,surariver akhtubariver
 Black Buffalo,15000,20000,akhtubariver
@@ -33,7 +33,7 @@ Caspian Lamprey,150,200,akhtubariver
 Caspian Roach,500,800,akhtubariver
 Catfish,100000,200000,mosquitolake windingrivulet oldburglake belayariver volkhovriver severskydonetsriver surariver ladogalake theamberlake ladogaarchipelago akhtubariver
 Char,5000,7500,kuorilake ladogalake ladogaarchipelago
-Chinese Sleeper,400,700,thecottagepond,mosquitolake windingrivulet oldburglake volkhovriver surariver theamberlake
+Chinese Sleeper,400,700,thecottagepond mosquitolake windingrivulet oldburglake volkhovriver surariver theamberlake
 Chinook Salmon,40000,null,yamariver
 Chub,4000,7000,mosquitolake windingrivulet oldburglake belayariver bearlake volkhovriver severskydonetsriver surariver ladogalake theamberlake ladogaarchipelago akhtubariver
 Chum Salmon,8000,10000,yamariver
@@ -104,7 +104,7 @@ Pumpkinseed Sunfish,450,600,severskydonetsriver
 Rainbow Trout,10000,13000,kuorilake
 Red Char,5000,7500,ladogalake ladogaarchipelago
 Red Starvas Carp - Scaly,20000,30000,theamberlake
-Ripus,1200,1700,ladogalake,ladogaarchipelago
+Ripus,1200,1700,ladogalake ladogaarchipelago
 River Mussel,190,290,windingrivulet belayariver bearlake volkhovriver severskydonetsriver surariver akhtubariver lowertunguskariver
 Round Whitefish,1200,1600,lowertunguskariver yamariver
 Rudd,1500,2000,severskydonetsriver surariver akhtubariver
@@ -140,7 +140,7 @@ Three Toother Lamprey,null,null,yamariver
 Three-spined Stickleback,70,90,ladogalake ladogaarchipelago lowertunguskariver
 Tugun,60,70,lowertunguskariver
 Ukrainian Lamprey,150,200,severskydonetsriver
-Valaam Whitefish,1500,2400,ladogalake,ladogaarchipelago
+Valaam Whitefish,1500,2400,ladogalake ladogaarchipelago
 Vendace,500,800,kuorilake volkhovriver ladogalake ladogaarchipelago
 Vimba,1500,2400,volkhovriver surariver ladogalake ladogaarchipelago
 Volga Zander,1400,2200,windingrivulet severskydonetsriver surariver
