@@ -23,13 +23,12 @@ with open("fishes.csv") as file:
         query += ",null)"
 
         db.commit()
-        print(query)
 
         fish = cursor.execute(query)
 
         fish_id = fish.lastrowid
 
-        foundInMaps = data[3].split(";")
+        foundInMaps = data[3].split(" ")
 
         for map in foundInMaps:
             map_id = cursor.execute(
@@ -41,4 +40,3 @@ with open("fishes.csv") as file:
             query = f"INSERT INTO map_fishes VALUES(null,{map_id[0]},{fish_id})"
             cursor.execute(query)
             db.commit()
-            print(query)

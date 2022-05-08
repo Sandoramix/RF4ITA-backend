@@ -22,7 +22,7 @@ with open("trophies.csv") as file:
         fishes = fishes.split(";")
         for fish in fishes:
             query = f"select id from fishes where name='{fish}'"
-            print(query)
+
             id = cursor.execute(query).fetchone()
             if not id:
                 print(fish)
@@ -31,6 +31,6 @@ with open("trophies.csv") as file:
             db.commit()
 
             query = f"INSERT INTO map_trophies VALUES(null,{map_id},{id})"
-            print(query)
+
             cursor.execute(query)
             db.commit()
