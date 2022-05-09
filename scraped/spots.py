@@ -13,20 +13,16 @@ with open("spots.csv") as file:
         spots_raw = data[1]
         if spots_raw == "":
             continue
-        map_id = cursor.execute(
-            f"select id from maps where name='{map}'").fetchone()
 
-        if not map_id:
-            print(map)
-            continue
-        map_id = map_id[0]
         spots = spots_raw.split(" ")
         for spot in spots:
             splitted = spot.split(":")
+            if len(splitted) != 2:
+                continue
             x = splitted[0]
             y = splitted[1]
 
-            query = f"INSERT INTO spots VALUES(null,{map_id},{x},{y})"
-            print(query)
+            query = f"INSERT INTO spots VALUES(null,(select id from maps where name='{map}'),{x},{y})"
+            # print(query)
             cursor.execute(query)
             db.commit()
