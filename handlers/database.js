@@ -3,7 +3,7 @@ let path = require(`path`);
 let db_path = path.resolve(__dirname, `../`, `db.sqlite`);
 var db = sqlite();
 //TODO REMOVE VERBOSE MODE
-
+const maps = require(`../maps.json`);
 try {
     db = sqlite(db_path, { fileMustExist: true });
 } catch (error) {
@@ -85,17 +85,23 @@ try {
         db.prepare(x).run();
     });
 
-    const maps = require(`../maps.json`);
-
     Object.entries(maps).forEach((map) => {
                 let name = map[0];
                 let data = map[1];
                 var query = `INSERT INTO maps VALUES(null,'${name}','${data.prettifiedName}','${`${data.x.min}:${data.x.max}`}','${`${data.y.min}:${data.y.max}`}',${data.squareWidth},${
 			data.hasGroundTiles ? `'T'` : `'F'`
-		})`;
+		},${data.unlockedAt});`;
 
 		db.prepare(query).run();
 	});
 }
+
+// Object.entries(maps).forEach((map) => {
+// 	let name = map[0];
+// 	let data = map[1];
+// 	var query = `update maps set unlocked_at=${data.unlockedAt} where name='${name}'`;
+
+// 	db.prepare(query).run();
+// });
 
 module.exports = db;

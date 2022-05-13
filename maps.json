@@ -10,7 +10,8 @@
             "max": 20
         },
         "squareWidth": 8,
-        "hasGroundTiles": false
+        "hasGroundTiles": false,
+        "unlockedAt": 1
     },
     "mosquitolake": {
         "prettifiedName": "Mosquito Lake",
@@ -23,7 +24,8 @@
             "max": 112
         },
         "squareWidth": 35,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 1
     },
     "windingrivulet": {
         "prettifiedName": "Winding Rivulet",
@@ -36,7 +38,8 @@
             "max": 147
         },
         "squareWidth": 44,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 1
     },
     "oldburglake": {
         "prettifiedName": "Oldburg Lake",
@@ -49,7 +52,8 @@
             "max": 80
         },
         "squareWidth": 39,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 12
     },
     "belayariver": {
         "prettifiedName": "Belaya River",
@@ -62,7 +66,8 @@
             "max": 103
         },
         "squareWidth": 52,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 12
     },
     "kuorilake": {
         "prettifiedName": "Kuori Lake",
@@ -75,7 +80,8 @@
             "max": 146
         },
         "squareWidth": 46,
-        "hasGroundTiles": false
+        "hasGroundTiles": false,
+        "unlockedAt": 16
     },
     "bearlake": {
         "prettifiedName": "Bear Lake",
@@ -88,7 +94,8 @@
             "max": 90
         },
         "squareWidth": 42,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 18
     },
     "volkhovriver": {
         "prettifiedName": "Volkhov River",
@@ -101,7 +108,8 @@
             "max": 200
         },
         "squareWidth": 100,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 20
     },
     "severskydonetsriver": {
         "prettifiedName": "Seversky Donets River",
@@ -114,7 +122,8 @@
             "max": 187
         },
         "squareWidth": 90,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 22
     },
     "surariver": {
         "prettifiedName": "Sura River",
@@ -127,7 +136,8 @@
             "max": 159
         },
         "squareWidth": 83,
-        "hasGroundTiles": false
+        "hasGroundTiles": false,
+        "unlockedAt": 24
     },
     "ladogalake": {
         "prettifiedName": "Ladoga Lake",
@@ -140,7 +150,8 @@
             "max": 93
         },
         "squareWidth": 45,
-        "hasGroundTiles": false
+        "hasGroundTiles": false,
+        "unlockedAt": 26
     },
     "theamberlake": {
         "prettifiedName": "The Amber Lake",
@@ -153,7 +164,8 @@
             "max": 205
         },
         "squareWidth": 90,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 26
     },
     "ladogaarchipelago": {
         "prettifiedName": "Ladoga Archipelago",
@@ -166,7 +178,8 @@
             "max": 599
         },
         "squareWidth": 300,
-        "hasGroundTiles": false
+        "hasGroundTiles": false,
+        "unlockedAt": 27
     },
     "akhtubariver": {
         "prettifiedName": "Akhtuba River",
@@ -179,7 +192,8 @@
             "max": 199
         },
         "squareWidth": 98,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 28
     },
     "lowertunguskariver": {
         "prettifiedName": "Lower Tunguska River",
@@ -192,7 +206,8 @@
             "max": 241
         },
         "squareWidth": 120,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 30
     },
     "yamariver": {
         "prettifiedName": "Yama River",
@@ -205,6 +220,7 @@
             "max": 299
         },
         "squareWidth": 140,
-        "hasGroundTiles": true
+        "hasGroundTiles": true,
+        "unlockedAt": 32
     }
 }
