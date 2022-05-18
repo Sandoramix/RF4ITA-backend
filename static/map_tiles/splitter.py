@@ -35,7 +35,7 @@ def tile(dir_in, x, y, z, ):
 
 args = sys.argv
 if len(args) < 5:
-    exit(" usage: z x y file")
+    exit(" usage: z x y folder")
 
 directory = sys.argv[4]
 
