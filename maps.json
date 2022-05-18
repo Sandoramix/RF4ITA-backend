@@ -1,6 +1,7 @@
 {
     "thecottagepond": {
         "prettifiedName": "The Cottage Pond",
+        "prettifiedNameIt": "Il Laghetto Cottage",
         "x": {
             "min": 4,
             "max": 20
@@ -15,6 +16,7 @@
     },
     "mosquitolake": {
         "prettifiedName": "Mosquito Lake",
+        "prettifiedNameIt": "Lago Mosquito",
         "x": {
             "min": 33,
             "max": 109
@@ -29,6 +31,7 @@
     },
     "windingrivulet": {
         "prettifiedName": "Winding Rivulet",
+        "prettifiedNameIt": "Rivolo avvolgente",
         "x": {
             "min": 48,
             "max": 138
@@ -43,6 +46,7 @@
     },
     "oldburglake": {
         "prettifiedName": "Oldburg Lake",
+        "prettifiedNameIt": "Vecchio lago di Burg",
         "x": {
             "min": 1,
             "max": 80
@@ -57,6 +61,7 @@
     },
     "belayariver": {
         "prettifiedName": "Belaya River",
+        "prettifiedNameIt": "Fiume Belaya",
         "x": {
             "min": 3,
             "max": 110
@@ -71,6 +76,7 @@
     },
     "kuorilake": {
         "prettifiedName": "Kuori Lake",
+        "prettifiedNameIt": "Lago Kuori",
         "x": {
             "min": 56,
             "max": 146
@@ -85,6 +91,7 @@
     },
     "bearlake": {
         "prettifiedName": "Bear Lake",
+        "prettifiedNameIt": "Lago degli Orsi",
         "x": {
             "min": 8,
             "max": 92
@@ -99,6 +106,7 @@
     },
     "volkhovriver": {
         "prettifiedName": "Volkhov River",
+        "prettifiedNameIt": "Fiume Volkhov",
         "x": {
             "min": 0,
             "max": 200
@@ -113,6 +121,7 @@
     },
     "severskydonetsriver": {
         "prettifiedName": "Seversky Donets River",
+        "prettifiedNameIt": "Fiume Seversky Donets",
         "x": {
             "min": 13,
             "max": 189
@@ -127,6 +136,7 @@
     },
     "surariver": {
         "prettifiedName": "Sura River",
+        "prettifiedNameIt": "Fiume Sura",
         "x": {
             "min": 1,
             "max": 157
@@ -141,6 +151,7 @@
     },
     "ladogalake": {
         "prettifiedName": "Ladoga Lake",
+        "prettifiedNameIt": "Lago Ladoga",
         "x": {
             "min": 8,
             "max": 98
@@ -155,6 +166,7 @@
     },
     "theamberlake": {
         "prettifiedName": "The Amber Lake",
+        "prettifiedNameIt": "Il Lago d`Ambra",
         "x": {
             "min": 6,
             "max": 186
@@ -169,6 +181,7 @@
     },
     "ladogaarchipelago": {
         "prettifiedName": "Ladoga Archipelago",
+        "prettifiedNameIt": "Arcipelago di Ladoga",
         "x": {
             "min": 0,
             "max": 599
@@ -183,6 +196,7 @@
     },
     "akhtubariver": {
         "prettifiedName": "Akhtuba River",
+        "prettifiedNameIt": "Fiume Akhtuba",
         "x": {
             "min": 2,
             "max": 200
@@ -197,6 +211,7 @@
     },
     "lowertunguskariver": {
         "prettifiedName": "Lower Tunguska River",
+        "prettifiedNameIt": "Fiume Tunguska inferiore",
         "x": {
             "min": 0,
             "max": 240
@@ -211,6 +226,7 @@
     },
     "yamariver": {
         "prettifiedName": "Yama River",
+        "prettifiedNameIt": "Fiume Yama",
         "x": {
             "min": 0,
             "max": 298

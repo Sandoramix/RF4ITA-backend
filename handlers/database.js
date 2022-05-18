@@ -5,12 +5,12 @@ var db = sqlite();
 //TODO REMOVE VERBOSE MODE
 const maps = require(`../maps.json`);
 try {
-    db = sqlite(db_path, { fileMustExist: true });
+	db = sqlite(db_path, { fileMustExist: true });
 } catch (error) {
-    db = sqlite(db_path, { fileMustExist: false });
-    const queries = [
-        `DROP TABLE IF EXISTS maps;`,
-        `CREATE TABLE maps (
+	db = sqlite(db_path, { fileMustExist: false });
+	const queries = [
+		`DROP TABLE IF EXISTS maps;`,
+		`CREATE TABLE maps (
     id                INTEGER       PRIMARY KEY AUTOINCREMENT,
     name              VARCHAR (100) NOT NULL,
     formatted_name    VARCHAR (100) NOT NULL,
@@ -22,8 +22,8 @@ try {
                                     NOT NULL
                                     CHECK (has_ground_tiles IN ('F', 'T') ) 
 );`,
-        `DROP TABLE IF EXISTS fishes;`,
-        `CREATE TABLE fishes (
+		`DROP TABLE IF EXISTS fishes;`,
+		`CREATE TABLE fishes (
     id           INTEGER      PRIMARY KEY AUTOINCREMENT,
     name         VARCHAR (50) NOT NULL,
     name_it      VARCHAR,
@@ -31,8 +31,8 @@ try {
     super_trophy INTEGER,
     icon         VARCHAR
 );`,
-        `DROP TABLE IF EXISTS map_fishes;`,
-        `CREATE TABLE map_fishes (
+		`DROP TABLE IF EXISTS map_fishes;`,
+		`CREATE TABLE map_fishes (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     map  INTEGER REFERENCES maps (id) ON DELETE CASCADE
                                       MATCH SIMPLE
@@ -41,8 +41,8 @@ try {
                                         MATCH SIMPLE
                  NOT NULL
 );`,
-        `DROP TABLE IF EXISTS map_trophies;`,
-        `CREATE TABLE map_trophies (
+		`DROP TABLE IF EXISTS map_trophies;`,
+		`CREATE TABLE map_trophies (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     map  VARCHAR REFERENCES maps (id) ON DELETE CASCADE
                                       MATCH SIMPLE,
@@ -50,8 +50,8 @@ try {
                                         MATCH SIMPLE
 );
 `,
-        `DROP VIEW IF EXISTS map_fishable;`,
-        `CREATE VIEW map_fishable AS
+		`DROP VIEW IF EXISTS map_fishable;`,
+		`CREATE VIEW map_fishable AS
     SELECT m.name AS map_name,
            m.formatted_name AS map_formatted_name,
            m.formatted_name_it AS map_formatted_name_it,
@@ -65,8 +65,8 @@ try {
            maps m ON m.id = mf.map
            INNER JOIN
            fishes f ON f.id = mf.fish;`,
-        `DROP VIEW IF EXISTS all_map_trophies;`,
-        `CREATE VIEW all_map_trophies AS
+		`DROP VIEW IF EXISTS all_map_trophies;`,
+		`CREATE VIEW all_map_trophies AS
     SELECT m.name AS map_name,
            m.formatted_name AS map_formatted_name,
            m.formatted_name_it AS map_formatted_name_it,
@@ -80,15 +80,15 @@ try {
            maps m ON m.id = mt.map
            INNER JOIN
            fishes f ON f.id = mt.fish;`,
-    ];
-    queries.forEach((x) => {
-        db.prepare(x).run();
-    });
+	];
+	queries.forEach((x) => {
+		db.prepare(x).run();
+	});
 
-    Object.entries(maps).forEach((map) => {
-                let name = map[0];
-                let data = map[1];
-                var query = `INSERT INTO maps VALUES(null,'${name}','${data.prettifiedName}','${`${data.x.min}:${data.x.max}`}','${`${data.y.min}:${data.y.max}`}',${data.squareWidth},${
+	Object.entries(maps).forEach((map) => {
+		let name = map[0];
+		let data = map[1];
+		var query = `INSERT INTO maps VALUES(null,'${name}','${data.prettifiedName}','${`${data.x.min}:${data.x.max}`}','${`${data.y.min}:${data.y.max}`}',${data.squareWidth},${
 			data.hasGroundTiles ? `'T'` : `'F'`
 		},${data.unlockedAt});`;
 
@@ -99,7 +99,7 @@ try {
 // Object.entries(maps).forEach((map) => {
 // 	let name = map[0];
 // 	let data = map[1];
-// 	var query = `update maps set unlocked_at=${data.unlockedAt} where name='${name}'`;
+// 	var query = `update maps set formatted_name_it='${data.prettifiedNameIt}' where name='${name}'`;
 
 // 	db.prepare(query).run();
 // });
