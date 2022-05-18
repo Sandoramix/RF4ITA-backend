@@ -17,6 +17,7 @@ db.prepare(`SELECT * FROM maps`)
         maps.push({
             id: map.id,
             name: map.name,
+            default_name: map.formatted_name,
             formatted_name: map.formatted_name,
 
             formatted_name_it: map.formatted_name_it,
