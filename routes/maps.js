@@ -18,6 +18,8 @@ db.prepare(`SELECT * FROM maps`)
             id: map.id,
             name: map.name,
             formatted_name: map.formatted_name,
+
+            formatted_name_it: map.formatted_name_it,
             limits: {
                 x: {
                     min: parseInt(limitsX[0]),
