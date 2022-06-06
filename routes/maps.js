@@ -64,14 +64,15 @@ module.exports = {
                 return errorCatch(res, 404, `Map not found`);
             }
 
-            const file_path = `./static/layouts/${map_name}.svg`;
+            // const file_path = `./static/layouts/${map_name}.svg`;
 
-            var file = path.resolve(file_path);
+            // var file = path.resolve(file_path);
 
-            if (!fs.existsSync(file)) {
-                return res.status(404).send(null);
-            }
-            res.status(200).sendFile(file);
+            // if (!fs.existsSync(file)) {
+            //    return res.status(404).send(null);
+            // }
+            res.status(404).send(null);
+            // res.status(200).sendFile(file);
         });
 
         route.get(`/:map/:id`, (req, res) => {
