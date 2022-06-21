@@ -71,6 +71,7 @@ module.exports = {
                 date: lastchange
             });
         });
+        //
         route.get(`/:map`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
 
