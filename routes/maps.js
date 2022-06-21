@@ -46,9 +46,7 @@ module.exports = {
         const route = express.Router({ caseSensitive: false });
 
         route.get(`/`, (req, res) => {
-            res.status(200).json({
-                results: maps,
-            });
+            res.status(200).json(maps);
         });
 
         route.get(`/:map/points`, (req, res) => {

@@ -2,7 +2,7 @@ const express = require(`express`);
 const db = require(`../handlers/database`);
 const { errorCatch } = require("../handlers/utils");
 const { mapExists } = require("./maps");
-
+const lastchange = "2022-06-21T20:30:17.134Z"
 var fishes = [];
 db.prepare(`SELECT * FROM fishes`)
     .all()
@@ -10,10 +10,10 @@ db.prepare(`SELECT * FROM fishes`)
         fishes.push({
             id: fish.id,
             default_name: fish.name,
-            name: fish.name,
-            name_it: fish.name_it,
-            trophy: fish.trophy,
-            super_trophy: fish.super_trophy,
+            fish_name: fish.name,
+            fish_name_it: fish.name_it,
+            fish_trophy: fish.trophy,
+            fish_super_trophy: fish.super_trophy,
             icon: fish.icon,
         });
     });
@@ -64,8 +64,11 @@ module.exports = {
         const route = express.Router({ caseSensitive: false });
 
         route.get(`/`, (req, res) => {
+            res.status(200).json(fishes);
+        });
+        route.get(`/lastchange`, (req, res) => {
             res.status(200).json({
-                results: fishes,
+                date: lastchange
             });
         });
         route.get(`/:map`, (req, res) => {
@@ -75,9 +78,7 @@ module.exports = {
                 return errorCatch(res, 404, `Map not found`);
             }
 
-            res.status(200).json({
-                results: map_fishes.get(map_name) || [],
-            });
+            res.status(200).json(map_fishes.get(map_name) || []);
         });
         route.get(`/:map/trophies`, (req, res) => {
             var map_name = req.params.map.toLowerCase();
@@ -86,9 +87,7 @@ module.exports = {
                 return errorCatch(res, 404, `Map not found`);
             }
 
-            res.status(200).json({
-                results: map_trophies.get(map_name) || [],
-            });
+            res.status(200).json(map_trophies.get(map_name) || []);
         });
 
         return route;

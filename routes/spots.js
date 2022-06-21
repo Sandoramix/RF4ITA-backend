@@ -33,9 +33,7 @@ module.exports = {
                     message: `Map doesn't exist`,
                 });
 
-            return res.status(200).json({
-                results: map_spots.get(map_name) || [],
-            });
+            return res.status(200).json(map_spots.get(map_name) || []);
         });
         return route;
     },
